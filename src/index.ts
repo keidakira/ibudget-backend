@@ -1,14 +1,22 @@
-import type { Request, Response } from 'express'
-import * as express from 'express'
+import * as express from "express";
+import * as mongoose from "mongoose";
+import * as dotenv from "dotenv";
 
-const app = express()
-const port = 8080
+import {AuthRouter} from "./routes/auth.route";
 
-app.get('/', (req: Request, res: Response) => {
-  console.log(req.query)
-  res.send('Hi, mom!')
-})
+dotenv.config();
+
+const app = express();
+const port = 8080;
+
+app.use(express.json());
+
+mongoose
+  .connect(process.env.MONGODB_URL || "")
+  .then(() => console.log("Connected to MongoDB"));
+
+app.use("/api", AuthRouter);
 
 app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`)
-})
+  console.log(`Server started at http://localhost:${port}`);
+});
