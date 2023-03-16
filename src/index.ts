@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import * as mongoose from "mongoose";
 import * as dotenv from "dotenv";
 
@@ -6,7 +6,7 @@ import {AuthRouter} from "./routes/auth.route";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const port = 8080;
 
 app.use(express.json());
