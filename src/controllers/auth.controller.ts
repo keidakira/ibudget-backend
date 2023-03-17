@@ -23,7 +23,3 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(response.status).json(response.json());
 };
-
-export const login = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
-};

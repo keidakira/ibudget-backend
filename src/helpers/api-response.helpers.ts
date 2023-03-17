@@ -2,7 +2,7 @@ class ApiResponse {
     status = 200;
     error = false;
     message = "";
-    data: any = null;
+    data: object | null = null;
 
     public json() {
         return {
