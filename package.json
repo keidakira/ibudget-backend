@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "start": "tsc && node dist/index.js",
     "lint": "eslint --ext .ts src/ --max-warnings=0",
     "test": "./node_modules/.bin/mocha --require ts-node/register --require tsconfig-paths/register --exit --recursive 'src/tests/*.ts'",
