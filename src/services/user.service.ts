@@ -7,7 +7,7 @@ const getUserById = async (id) => {
 };
 
 const getUserByEmail = async (email) => {
-    const user = await User.find({ email });
+    const user = await User.findOne({ email });
     return user;
 };
 
@@ -18,7 +18,7 @@ const createUser = async ({ name, email, password, confirmPassword }) => {
 
     const userExists = await getUserByEmail(email);
 
-    if (userExists.length > 0) {
+    if (userExists) {
         throw new Error("User already exists");
     }
 
@@ -41,8 +41,25 @@ const createUser = async ({ name, email, password, confirmPassword }) => {
     return user;
 };
 
+const loginUser = async ({ email, password }) => {
+    const user = await getUserByEmail(email);
+
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+
+    const hashedPassword = await CryptoHelper.hash(password);
+
+    if (hashedPassword !== user.password) {
+        throw new Error("Invalid credentials");
+    }
+
+    return user;
+};
+
 export default {
     getUserById,
     getUserByEmail,
     createUser,
+    loginUser,
 };

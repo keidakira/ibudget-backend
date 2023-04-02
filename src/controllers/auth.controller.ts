@@ -23,3 +23,24 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(response.status).json(response.json());
 };
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    const response = new ApiResponse();
+
+    try {
+        const user = await UserService.loginUser({ email, password });
+        response.status = 200;
+        response.message = "User logged in successfully";
+        response.data = {
+            email: user.email,
+            token: generateToken({ email: user.email })
+        };
+    } catch (error) {
+        response.error = true;
+        response.status = 400;
+        response.message = "Invalid credentials";
+    }
+
+    return res.status(response.status).json(response.json());
+};
