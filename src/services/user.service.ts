@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User, { IUser } from "../models/user.model";
 import { CryptoHelper } from "../helpers/crypto.helper";
 
 const getUserById = async (id) => {
@@ -6,9 +6,13 @@ const getUserById = async (id) => {
     return user;
 };
 
-const getUserByEmail = async (email) => {
-    const user = await User.findOne({ email });
-    return user;
+const getUserByEmail = async (email: string): Promise<IUser | null> => {
+    try {
+        const user = await User.findOne({ email });
+        return user;
+    } catch (error) {
+        throw new Error("Unable to retrieve user for email: " + email);
+    }
 };
 
 const createUser = async ({ name, email, password, confirmPassword }) => {

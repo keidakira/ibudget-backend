@@ -3,6 +3,7 @@ import * as mongoose from "mongoose";
 import * as dotenv from "dotenv";
 
 import {AuthRouter} from "./routes/auth.route";
+import { ExpensesRouter } from "./routes/expenses.route";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB"));
 
 app.use("/api", AuthRouter);
+app.use("/api/expenses", ExpensesRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
